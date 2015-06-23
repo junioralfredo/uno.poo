@@ -51,7 +51,7 @@ public class Naipe {
         return true;
     }
     
-    private void accion(Jugador jugador) {
+    public void accion(Jugador jugador) {
         //Si la carta es un inversor el turno se aumenta si esta disminuyendo y disminuye si esta aumentando
         //Si la carta es un sumador el jugador quita cartas del mazo el numero de veces que le indique la carta
         //Si la carta es un cambia_color el color actual del juego cambia
@@ -71,11 +71,14 @@ public class Naipe {
                     Naipe naipe = UNO.mazo.quitarNaipe();
                     jugador.tomarNaipe(naipe);
                 }
+                break;
+            default:
+                break;
         }
     }
 
     @Override
     public String toString() {
-        return "Naipe{" + "color=" + color + ", valor=" + valor + '}'+"\n";
+        return "Naipe{" + "color=" + color + ", valor=" + valor + '}';
     }
 }

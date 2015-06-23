@@ -18,13 +18,16 @@ public class UNO {
     public static int jugador_actual = 0;
     public static final int NUMERO_JUGADORES = 4;
     public static Color color_actual = Color.AMARILLO;
+    public static String valor_actual = "1";
     public static int sentido = 1;
     public static Mazo mazo = new Mazo();
+    public static Cementerio cementerio= new Cementerio();
     private static ArrayList<Jugador> jugadores = new ArrayList<>();
     public static final Random RND = new Random();
     
     public static void main(String[] args) {    
         init();
+        turno();
     }
     
     private static void init(){
@@ -54,20 +57,22 @@ public class UNO {
     }
 
     static Color ingresarColor() {
-        System.out.println("Ingresar color a cambiar");
-        System.out.println("1. Amarillo");
-        System.out.println("2. Rojo");
-        System.out.println("3. Azul");
-        System.out.println("4. Verde");
         
-        String color_str;
-        int color_int;
-        Scanner entrada=new Scanner(System.in);// se declara e inicializa una instancia  de la clase Scanner.
-        System.out.print("Ingrese una opcion [1/2/3/4]: ");
-        color_str = entrada.next();
-        
-        color_int = Integer.valueOf(color_str);
+        int color_int = 0;
         do {
+            System.out.println("Ingresar color a cambiar");
+            System.out.println("1. Amarillo");
+            System.out.println("2. Rojo");
+            System.out.println("3. Azul");
+            System.out.println("4. Verde");
+
+            String color_str;
+            Scanner entrada = new Scanner(System.in);// se declara e inicializa una instancia  de la clase Scanner.
+            System.out.print("Ingrese una opcion [1/2/3/4]: ");
+            color_str = entrada.next();
+
+            color_int = Integer.valueOf(color_str);
+        
             switch(color_int){
                 case 1:
                     return Color.AMARILLO;
@@ -80,5 +85,32 @@ public class UNO {
             }
         } while (color_int<1 || color_int>4);
         return Color.MULTI;
+    }
+
+    private static void turno() {
+        Jugador jugador = jugadores.get(jugador_actual);
+        
+        System.out.println("Ingresar el naipe a lanzar");
+        System.out.println(jugador.toString());
+        
+        String naipe_str;
+        int naipe_int;
+        Scanner entrada = new Scanner(System.in);// se declara e inicializa una instancia  de la clase Scanner.
+        System.out.print("Ingrese una opcion [1 .."+ jugador.getMano().size() +"]: ");
+        naipe_str = entrada.next();
+        
+        naipe_int = Integer.valueOf(naipe_str);
+        Naipe naipe_lanzado = jugador.lanzarNaipe(naipe_int-1);
+        if(naipe_lanzado.getColor()==color_actual || naipe_lanzado.getValor().equalsIgnoreCase(valor_actual)){
+            cementerio.ponerNaipe(naipe_lanzado);
+        }
+        siguienteTurno();
+        actualizar(naipe_lanzado);
+        naipe_lanzado.accion(jugadores.get(jugador_actual));
+    }
+
+    private static void actualizar(Naipe naipe_lanzado) {
+        color_actual = naipe_lanzado.getColor();
+        valor_actual = naipe_lanzado.getValor();
     }
 }

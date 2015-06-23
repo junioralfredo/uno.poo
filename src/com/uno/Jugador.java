@@ -33,11 +33,10 @@ public class Jugador {
 
     @Override
     public String toString() {
-        String jugador_str = "Jugador{" + "mano=" + "[";
-        for(Naipe naipe:mano){
-            jugador_str = jugador_str + naipe.toString() + ",";
+        String jugador_str = "";
+        for(Naipe naipe: mano){
+            jugador_str = jugador_str + (mano.indexOf(naipe)+1) + ". " + naipe.toString() + "\n";
         }
-        jugador_str = jugador_str + "]}";
         return jugador_str;
     }
 }

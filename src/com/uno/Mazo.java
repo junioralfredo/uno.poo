@@ -14,7 +14,7 @@ import java.util.Random;
  * @author George Ladines
  */
 public class Mazo {
-     private ArrayList<Naipe> naipes;
+     protected ArrayList<Naipe> naipes;
      
      public static final String[] COMODINES = {"INVERTIR", "PASAR_TURNO", "CAMBIA_COLOR"};
      public static final int VALORES_N = 10;
@@ -26,7 +26,6 @@ public class Mazo {
     public Mazo() {
         this.naipes = new ArrayList<>();
         this.initialize();
-//        this.barajar();
     }
      
     private void initialize() {
@@ -88,6 +87,4 @@ public class Mazo {
         }
         return n;
     }
-
-    
 }
