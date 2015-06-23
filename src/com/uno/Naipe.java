@@ -55,6 +55,23 @@ public class Naipe {
         //Si la carta es un inversor el turno se aumenta si esta disminuyendo y disminuye si esta aumentando
         //Si la carta es un sumador el jugador quita cartas del mazo el numero de veces que le indique la carta
         //Si la carta es un cambia_color el color actual del juego cambia
+        switch(this.tipo_naipe){
+            case INVERTIR:
+                UNO.sentido = UNO.sentido * -1;
+                break;
+            case PASAR_TURNO:
+                UNO.siguienteTurno();
+                break;
+            case CAMBIA_COLOR:
+                UNO.color_actual = UNO.ingresarColor();
+                break;
+            case SUMADOR:
+                int valor_suma = Integer.valueOf(this.getValor().split("+")[1]);
+                for(int i=0; i<=valor_suma;i++){
+                    Naipe naipe = UNO.mazo.quitarNaipe();
+                    jugador.tomarNaipe(naipe);
+                }
+        }
     }
 
     @Override
